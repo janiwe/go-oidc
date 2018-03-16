@@ -275,7 +275,7 @@ func (c *Client) RequestToken(grantType, value string) (result TokenResponse, er
 		return
 	}
 
-	debug(httputil.DumpRequestOut(request, true))
+	debug(httputil.DumpRequestOut(req, true))
 
 	resp, err := c.hc.Do(req)
 	if err != nil {
