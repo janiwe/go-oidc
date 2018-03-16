@@ -194,9 +194,7 @@ func (c *Client) newAuthenticatedRequest(urlToken string, values url.Values) (*h
 		if err != nil {
 			return nil, err
 		}
-		encodedID := url.QueryEscape(c.creds.ID)
-		encodedSecret := url.QueryEscape(c.creds.Secret)
-		req.SetBasicAuth(encodedID, encodedSecret)
+		req.SetBasicAuth(c.creds.ID, c.creds.Secret)
 	default:
 		panic("misconfigured client: auth method not supported")
 	}
