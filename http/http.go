@@ -93,7 +93,10 @@ func expires(date, expires string) (time.Duration, bool, error) {
 
 	te, err := time.Parse(time.RFC1123, expires)
 	if err != nil {
-		return 0, false, err
+		// according to https://tools.ietf.org/html/rfc2616#section-14.21
+		// clients MUST treat unparseable dates as "already expired"
+		// (but not an error)
+		return 0, false, nil
 	}
 
 	td, err := time.Parse(time.RFC1123, date)
