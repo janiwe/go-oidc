@@ -3,12 +3,10 @@ package oauth2
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"fmt"
 	"io/ioutil"
 	"mime"
 	"net/http"
-	"net/http/httputil"
 	"net/url"
 	"sort"
 	"strconv"
@@ -273,15 +271,11 @@ func (c *Client) RequestToken(grantType, value string) (result TokenResponse, er
 		return
 	}
 
-	debug(httputil.DumpRequestOut(req, true))
-
 	resp, err := c.hc.Do(req)
 	if err != nil {
 		return
 	}
 	defer resp.Body.Close()
-	
-	debug(httputil.DumpResponse(resp, true))
 
 	return parseTokenResponse(resp)
 }
@@ -417,13 +411,5 @@ func ParseAuthCodeRequest(q url.Values) (AuthCodeRequest, error) {
 	}()
 
 	return acr, err
-}
-
-func debug(data []byte, err error) {
-    if err == nil {
-        fmt.Printf("%s\n\n", data)
-    } else {
-        log.Fatalf("%s\n\n", err)
-    }
 }
 
